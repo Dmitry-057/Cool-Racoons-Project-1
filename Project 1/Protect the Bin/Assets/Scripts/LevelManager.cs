@@ -10,6 +10,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private GameObject[] tilePrefabs;
 
+    [SerializeField]
+    private CameraMovement cameraMovement;
     
     public float TileSize /* returns physical size of tile sprite */
     {
@@ -34,9 +36,13 @@ public class LevelManager : MonoBehaviour
         //We only have 3 different types of tiles
         string[] mapData = ReadLeveLText();
 
+        //calculates the X map size
         int mapX = mapData[0].ToCharArray().Length;
 
+        //calculates the Y map size
         int mapY = mapData.Length;
+
+        Vector3 maxTile = Vector3.zero;
 
         //gets a starting position, a.k.a top left corner
         Vector3 startPosition = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height));
@@ -50,12 +56,15 @@ public class LevelManager : MonoBehaviour
             for (int x = 0; x < mapX; x++)
             {
                 //call of the helper function that actually places tiles
-                PlaceTile( newTiles[x].ToString(), x, y, startPosition);
+                maxTile = PlaceTile( newTiles[x].ToString(), x, y, startPosition);
             }
         }
+
+        //passing maxTile cordinate (with account of Tile size) so that camera limit can be set
+        cameraMovement.SetLimits(new Vector3(maxTile.x + TileSize, maxTile.y - TileSize));
     }
 
-    private void PlaceTile(string tileType, int x, int y, Vector3 startPosition) //instantiates tile object and transforms its position (which results in tile being placed)
+    private Vector3 PlaceTile(string tileType, int x, int y, Vector3 startPosition) //instantiates tile object and transforms its position (which results in tile being placed)
     {
 
         int tileIndex = int.Parse(tileType);
@@ -65,6 +74,9 @@ public class LevelManager : MonoBehaviour
 
         //Uses the new tile variable to change the position of the tile
         newTile.transform.position = new Vector3(startPosition.x +(TileSize * x), startPosition.y - (TileSize * y), 0);
+
+        //returns cordinates of a newly placed tile
+        return newTile.transform.position;
     }
 
     private string[] ReadLeveLText(){
