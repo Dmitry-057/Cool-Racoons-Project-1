@@ -21,6 +21,7 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+       
         CreateLevel();
         
     }
@@ -30,6 +31,7 @@ public class LevelManager : MonoBehaviour
     {
         
     }
+
 
     private void CreateLevel()
     {
@@ -45,7 +47,7 @@ public class LevelManager : MonoBehaviour
         Vector3 maxTile = Vector3.zero;
 
         //gets a starting position, a.k.a top left corner
-        Vector3 startPosition = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height));
+        Vector3 worldStart = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height));
 
         //these 2 for loops allow to cover screen with tiles
         for (int y = 0; y < mapY; y++)
@@ -56,7 +58,7 @@ public class LevelManager : MonoBehaviour
             for (int x = 0; x < mapX; x++)
             {
                 //call of the helper function that actually places tiles
-                maxTile = PlaceTile( newTiles[x].ToString(), x, y, startPosition);
+                maxTile = PlaceTile( newTiles[x].ToString(), x, y, worldStart);
             }
         }
 
@@ -70,10 +72,10 @@ public class LevelManager : MonoBehaviour
         int tileIndex = int.Parse(tileType);
 
         //Creates a new tile and makes a reference to that tile in the new tile variable
-        GameObject newTile = Instantiate(tilePrefabs[tileIndex]);
+        TileScript newTile = Instantiate(tilePrefabs[tileIndex]).GetComponent<TileScript>();
 
         //Uses the new tile variable to change the position of the tile
-        newTile.transform.position = new Vector3(startPosition.x +(TileSize * x), startPosition.y - (TileSize * y), 0);
+        newTile.Setup(new Point(x, y), new Vector3(worldStart.x + (TileSize * x), worldStart.y - (TileSize * y), 0));
 
         //returns cordinates of a newly placed tile
         return newTile.transform.position;
