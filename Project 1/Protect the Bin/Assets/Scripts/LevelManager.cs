@@ -66,18 +66,21 @@ public class LevelManager : MonoBehaviour
         cameraMovement.SetLimits(new Vector3(maxTile.x + TileSize, maxTile.y - TileSize));
     }
 
-    private Vector3 PlaceTile(string tileType, int x, int y, Vector3 startPosition) //instantiates tile object and transforms its position (which results in tile being placed)
+    private Vector3 PlaceTile(string tileType, int x, int y, Vector3 worldStart) //instantiates tile object and transforms its position (which results in tile being placed)
     {
 
         int tileIndex = int.Parse(tileType);
 
         //Creates a new tile and makes a reference to that tile in the new tile variable
+
         TileScript newTile = Instantiate(tilePrefabs[tileIndex]).GetComponent<TileScript>();
+       
 
         //Uses the new tile variable to change the position of the tile
-        newTile.Setup(new Point(x, y), new Vector3(worldStart.x + (TileSize * x), worldStart.y - (TileSize * y), 0));
 
-        //returns cordinates of a newly placed tile
+
+        newTile.Setup(new Point(x, y), new Vector3(worldStart.x + (TileSize * x), worldStart.y - (TileSize * y), 0));
+        
         return newTile.transform.position;
     }
 
