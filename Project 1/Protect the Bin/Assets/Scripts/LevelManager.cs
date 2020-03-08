@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using System;
 
@@ -13,6 +14,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private CameraMovement cameraMovement;
     
+    public Dictionary<Point, TileScript> Tiles { get; set;}
+
     public float TileSize /* returns physical size of tile sprite */
     {
         get { return tilePrefabs[0].GetComponent<SpriteRenderer>().sprite.bounds.size.x; }
@@ -21,7 +24,6 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
         CreateLevel();
         
     }
@@ -33,8 +35,14 @@ public class LevelManager : MonoBehaviour
     }
 
 
+
     private void CreateLevel()
     {
+
+        Tiles = new Dictionary<Point, TileScript>();
+
+
+
         //We only have 3 different types of tiles
         string[] mapData = ReadLeveLText();
 
@@ -58,15 +66,17 @@ public class LevelManager : MonoBehaviour
             for (int x = 0; x < mapX; x++)
             {
                 //call of the helper function that actually places tiles
-                maxTile = PlaceTile( newTiles[x].ToString(), x, y, worldStart);
+                PlaceTile( newTiles[x].ToString(), x, y, worldStart);
             }
         }
 
+        maxTile = Tiles[new Point(mapX - 1, mapY -1)].transform.position;
+        
         //passing maxTile cordinate (with account of Tile size) so that camera limit can be set
         cameraMovement.SetLimits(new Vector3(maxTile.x + TileSize, maxTile.y - TileSize));
     }
 
-    private Vector3 PlaceTile(string tileType, int x, int y, Vector3 worldStart) //instantiates tile object and transforms its position (which results in tile being placed)
+    private void PlaceTile(string tileType, int x, int y, Vector3 worldStart) //instantiates tile object and transforms its position (which results in tile being placed)
     {
 
         int tileIndex = int.Parse(tileType);
@@ -81,7 +91,8 @@ public class LevelManager : MonoBehaviour
 
         newTile.Setup(new Point(x, y), new Vector3(worldStart.x + (TileSize * x), worldStart.y - (TileSize * y), 0));
         
-        return newTile.transform.position;
+        Tiles.Add( new Point(x,y), newTile);
+
     }
 
     private string[] ReadLeveLText(){
