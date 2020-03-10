@@ -31,8 +31,10 @@ public class TileScript : MonoBehaviour
 
     public void Setup(Point gridPos, Vector3 worldPos)
     {
-        this.GridPosition = GridPosition;
+        this.GridPosition = gridPos;
         transform.position = worldPos;
-       
+
+        LevelManager.Instance.Tiles.Add(gridPos, this);
+
     }
 }
