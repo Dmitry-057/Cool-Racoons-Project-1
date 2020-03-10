@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 
@@ -13,6 +12,11 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField]
     private CameraMovement cameraMovement;
+
+    private Point blueSpawn;
+
+    [SerializeField]
+    private GameObject bluePortalPrefab;
     
     public Dictionary<Point, TileScript> Tiles { get; set;}
 
@@ -70,10 +74,13 @@ public class LevelManager : MonoBehaviour
             }
         }
 
+        //gets the last tile
         maxTile = Tiles[new Point(mapX - 1, mapY -1)].transform.position;
         
         //passing maxTile cordinate (with account of Tile size) so that camera limit can be set
         cameraMovement.SetLimits(new Vector3(maxTile.x + TileSize, maxTile.y - TileSize));
+
+        SpawnPortals();
     }
 
     private void PlaceTile(string tileType, int x, int y, Vector3 worldStart) //instantiates tile object and transforms its position (which results in tile being placed)
@@ -91,6 +98,7 @@ public class LevelManager : MonoBehaviour
 
         newTile.Setup(new Point(x, y), new Vector3(worldStart.x + (TileSize * x), worldStart.y - (TileSize * y), 0));
         
+        //every tile is added to a dictionary
         Tiles.Add( new Point(x,y), newTile);
 
     }
@@ -104,5 +112,14 @@ public class LevelManager : MonoBehaviour
 
         return data.Split('-');
 
+    }
+
+    //spawns portals
+    private void SpawnPortals()
+    {
+        //spawns portal at given location
+        blueSpawn = new Point(0, 0);
+
+        Instantiate(bluePortalPrefab, Tiles[blueSpawn].GetComponent<TileScript>().WorldPosition, Quaternion.identity);
     }
 }
