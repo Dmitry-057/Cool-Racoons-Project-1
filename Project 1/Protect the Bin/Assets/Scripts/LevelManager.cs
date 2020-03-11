@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class LevelManager : MonoBehaviour
+public class LevelManager : Singleton<LevelManager>
 {
 
 
@@ -98,8 +98,7 @@ public class LevelManager : MonoBehaviour
 
         newTile.Setup(new Point(x, y), new Vector3(worldStart.x + (TileSize * x), worldStart.y - (TileSize * y), 0));
         
-        //every tile is added to a dictionary
-        Tiles.Add( new Point(x,y), newTile);
+      
 
     }
 
