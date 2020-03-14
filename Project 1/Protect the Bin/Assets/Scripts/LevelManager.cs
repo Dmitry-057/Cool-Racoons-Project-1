@@ -13,6 +13,9 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField]
     private CameraMovement cameraMovement;
 
+    [SerializeField]
+    private Transform map;
+
     private Point blueSpawn;
 
     [SerializeField]
@@ -96,7 +99,7 @@ public class LevelManager : Singleton<LevelManager>
         //Uses the new tile variable to change the position of the tile
 
 
-        newTile.Setup(new Point(x, y), new Vector3(worldStart.x + (TileSize * x), worldStart.y - (TileSize * y), 0));
+        newTile.Setup(new Point(x, y), new Vector3(worldStart.x + (TileSize * x), worldStart.y - (TileSize * y), 0),map);
         
       
 
