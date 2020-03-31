@@ -38,4 +38,18 @@ public class TileScript : MonoBehaviour
         LevelManager.Instance.Tiles.Add(gridPos, this); //use of singleton
 
     }
+
+    private void OnMouseOver()
+    {
+        if ( Input.GetMouseButtonDown(0) ){
+
+            PlaceTower();
+
+        }
+    }
+
+    private void PlaceTower()
+    {
+        Instantiate(GameManager.Instance.TowerPrefab,transform.position, Quaternion.identity);
+    }
 }
