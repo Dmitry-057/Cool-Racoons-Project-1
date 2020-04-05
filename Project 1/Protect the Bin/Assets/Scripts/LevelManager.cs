@@ -101,7 +101,7 @@ public class LevelManager : Singleton<LevelManager>
 
         newTile.Setup(new Point(x, y), new Vector3(worldStart.x + (TileSize * x), worldStart.y - (TileSize * y), 0),map);
         
-      
+ 
 
     }
 
