@@ -13,6 +13,8 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField]
     private CameraMovement cameraMovement;
 
+
+    //tha maps transform, needed for adding new tiles
     [SerializeField]
     private Transform map;
 
@@ -20,6 +22,8 @@ public class LevelManager : Singleton<LevelManager>
 
     [SerializeField]
     private GameObject bluePortalPrefab;
+
+    private Point mapSize;
     
     public Dictionary<Point, TileScript> Tiles { get; set;}
 
@@ -48,10 +52,10 @@ public class LevelManager : Singleton<LevelManager>
 
         Tiles = new Dictionary<Point, TileScript>();
 
-
-
         //We only have 3 different types of tiles
         string[] mapData = ReadLeveLText();
+
+        mapSize = new Point(mapData[0].ToCharArray().Length, mapData.Length);
 
         //calculates the X map size
         int mapX = mapData[0].ToCharArray().Length;
@@ -123,5 +127,10 @@ public class LevelManager : Singleton<LevelManager>
         blueSpawn = new Point(0, 0);
 
         Instantiate(bluePortalPrefab, Tiles[blueSpawn].GetComponent<TileScript>().WorldPosition, Quaternion.identity);
+    }
+
+    public bool InBounds( Point position)
+    {
+        return position.X >= 0 && position.Y >= 0 && position.X < mapSize.X && position.Y < mapSize.Y;
     }
 }

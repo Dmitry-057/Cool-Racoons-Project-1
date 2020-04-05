@@ -16,8 +16,12 @@ public class TileScript : MonoBehaviour
     //green Color
     private Color32 emptyColor = new Color32(96, 255, 90, 255);
 
-    private SpriteRenderer spriteRenderer;
 
+    public SpriteRenderer SpriteRenderer { get; set; }
+
+    public bool WalkAble { get; set; }
+
+    public bool Debugging { get; set; }
 
     //gets the center of the grid position
     public Vector2 WorldPosition 
@@ -32,7 +36,7 @@ public class TileScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        SpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -43,6 +47,7 @@ public class TileScript : MonoBehaviour
 
     public void Setup(Point gridPos, Vector3 worldPos, Transform parent)
     {
+        WalkAble = true;
         IsEmpty = true;
         this.GridPosition = gridPos;
         transform.position = worldPos;
@@ -57,11 +62,11 @@ public class TileScript : MonoBehaviour
         if (!EventSystem.current.IsPointerOverGameObject() && GameManager.Instance.ClickedBtn != null)
         {
             
-            if (IsEmpty)
+            if (IsEmpty && !Debugging)
             {
                 ColorTile(emptyColor);
             }
-            if (!IsEmpty)
+            if (!IsEmpty && !Debugging)
             {
                 ColorTile(fullColor);
             }
@@ -77,7 +82,11 @@ public class TileScript : MonoBehaviour
 
     private void OnMouseExit()
     {
-        ColorTile(Color.white);
+        if (!Debugging)
+        {
+            ColorTile(Color.white);
+        }
+        
     }
 
     private void PlaceTower()
@@ -93,11 +102,13 @@ public class TileScript : MonoBehaviour
             ColorTile(Color.white);
 
             GameManager.Instance.BuyTower();
+
+            WalkAble = false;
     }
     
 
     private void ColorTile(Color newColor)
     {
-        spriteRenderer.color = newColor;
+        SpriteRenderer.color = newColor;
     }
 }
