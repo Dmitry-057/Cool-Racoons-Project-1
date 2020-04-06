@@ -646,6 +646,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   start: {fileID: 0}
   goal: {fileID: 0}
+  arrowPrefab: {fileID: 2508251267096570459, guid: 26ddeb5a88ed8fd48bb748f8bff14a86,
+    type: 3}
+  debugTilePrefab: {fileID: 2788413901368377724, guid: 9704f028832dbf541ae6bd5df29f8aa5,
+    type: 3}
 --- !u!4 &453614857
 Transform:
   m_ObjectHideFlags: 0
