@@ -68,8 +68,6 @@ public static class AStar
                         //Step 3 adds neighbors to open list
                         Node neighbour = nodes[neighbourPos];
 
-
-
                         if ( openList.Contains(neighbour))
                         {
                             if ( currentNode.G + gCost < neighbour.G )//Step 9.4
