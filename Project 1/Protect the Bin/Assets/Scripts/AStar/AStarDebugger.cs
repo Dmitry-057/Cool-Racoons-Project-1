@@ -73,7 +73,7 @@ public class AStarDebugger : MonoBehaviour
 
         foreach ( Node node in closedList)
         {
-            if (node.TileRef != start && node.TileRef != goal && path.Contains(node))
+            if (node.TileRef != start && node.TileRef != goal && !path.Contains(node))
             {
                 CreateDebugTile( node.TileRef.WorldPosition, Color.blue, node);
             }

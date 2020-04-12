@@ -63,6 +63,10 @@ public static class AStar
                         }
                         else 
                         {
+                            if ( !ConnectedDiagonally( currentNode, nodes[neighbourPos]))
+                            {
+                                continue;
+                            }
                             gCost = 14;
                         }
                         //Step 3 adds neighbors to open list
@@ -112,4 +116,25 @@ public static class AStar
         //This is only for debugging needs to be removed later
         GameObject.Find("AStarDebugger").GetComponent<AStarDebugger>().DebugPath(openList, closedList, finalPath);
     }
+
+    private static bool ConnectedDiagonally (Node currentNode, Node neighbor)
+    {
+        Point direction = neighbor.GridPosition - currentNode.GridPosition;
+
+        Point first = new Point( currentNode.GridPosition.X + direction.X, currentNode.GridPosition.Y);
+    
+        Point second = new Point( currentNode.GridPosition.X, currentNode.GridPosition.Y + direction.Y);
+   
+        if ( LevelManager.Instance.InBounds(first) && !LevelManager.Instance.Tiles[first].WalkAble)
+        {
+            return false;
+        }
+
+        if (LevelManager.Instance.InBounds(second) && !LevelManager.Instance.Tiles[second].WalkAble)
+        {
+            return false;
+        }
+
+        return true;
+   }
 }
