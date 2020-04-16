@@ -23,6 +23,8 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField]
     private GameObject bluePortalPrefab;
 
+    public Portal BluePortal { get; set; }
+
     private Point mapSize;
     
     public Dictionary<Point, TileScript> Tiles { get; set;}
@@ -126,7 +128,10 @@ public class LevelManager : Singleton<LevelManager>
         //spawns portal at given location
         blueSpawn = new Point(0, 0);
 
-        Instantiate(bluePortalPrefab, Tiles[blueSpawn].GetComponent<TileScript>().WorldPosition, Quaternion.identity);
+        GameObject tmp = (GameObject) Instantiate(bluePortalPrefab, Tiles[blueSpawn].GetComponent<TileScript>().WorldPosition, Quaternion.identity);
+        BluePortal = tmp.GetComponent<Portal>();
+
+        BluePortal.name = "BluePortal";
     }
 
     public bool InBounds( Point position)
