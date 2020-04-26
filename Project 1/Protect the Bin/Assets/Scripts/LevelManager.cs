@@ -18,7 +18,7 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField]
     private Transform map;
 
-    private Point blueSpawn;
+    private Point blueSpawn, redSpawn;
 
     [SerializeField]
     private GameObject bluePortalPrefab;
@@ -26,6 +26,21 @@ public class LevelManager : Singleton<LevelManager>
     public Portal BluePortal { get; set; }
 
     private Point mapSize;
+
+    private Stack<Node> path;
+
+    public Stack<Node> Path
+    {
+        get
+        {
+            if ( path == null) 
+            {
+                GeneratePath();
+            }
+
+            return new Stack<Node>( new Stack<Node>(path));
+        }
+    }
     
     public Dictionary<Point, TileScript> Tiles { get; set;}
 
@@ -138,4 +153,10 @@ public class LevelManager : Singleton<LevelManager>
     {
         return position.X >= 0 && position.Y >= 0 && position.X < mapSize.X && position.Y < mapSize.Y;
     }
+
+    public void GeneratePath() 
+    {
+        path = AStar.GetPath( blueSpawn, redSpawn );
+    }
+
 }

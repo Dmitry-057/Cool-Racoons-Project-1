@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6357128593006856836}
   - component: {fileID: 6782668650652422962}
+  - component: {fileID: 114344926415873056}
   m_Layer: 0
   m_Name: OrangeCrabMonster
   m_TagString: Untagged
@@ -79,3 +80,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &114344926415873056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7801765810819817549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13ae58cc590567542bf6119a59c0ee46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
