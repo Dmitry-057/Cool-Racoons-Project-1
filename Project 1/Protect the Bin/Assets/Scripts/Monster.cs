@@ -10,6 +10,8 @@ public class Monster : MonoBehaviour
 
     private Stack<Node> path;
 
+    private Animator myAnimator;
+
     public Point GridPosition { get; set; }
 
     private Vector3 destination;
@@ -25,6 +27,9 @@ public class Monster : MonoBehaviour
     public void Spawn()
     {
         transform.position = LevelManager.Instance.BluePortal.transform.position;
+
+        //This is unused bc we do not have updownrightleft animations Video 7.4
+        myAnimator = GetComponent<Animator>();
 
         StartCoroutine( Scale( new Vector3( 0.1f, 0.1f ), new Vector3( -1, 1 )));
 
@@ -72,6 +77,30 @@ public class Monster : MonoBehaviour
 
             GridPosition = path.Peek().GridPosition;
             destination = path.Pop().WorldPosition;
+        }
+    }
+
+
+    private void Animate( Point currentPos, Point newPos ) //This is unused bc we do not have updownrightleft animations Video 7.4
+    {
+        if ( currentPos.Y > newPos.Y ) 
+        {
+            //We are moving down
+        } 
+        else if ( currentPos.Y < newPos.Y ) 
+        {
+            //Then we are moving up
+        }
+        if ( currentPos.Y == newPos.Y ) 
+        {
+            if ( currentPos.X > newPos.X) 
+            {
+                //Move ot left
+            }
+            else 
+            {
+                //Move to right
+            }
         }
     }
 }

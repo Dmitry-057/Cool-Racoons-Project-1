@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6357128593006856836}
   - component: {fileID: 6782668650652422962}
   - component: {fileID: 114344926415873056}
+  - component: {fileID: 95574390739546396}
   m_Layer: 0
   m_Name: OrangeCrabMonster
   m_TagString: Untagged
@@ -93,3 +94,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
+--- !u!95 &95574390739546396
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7801765810819817549}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c7e86a47d5ba4694fabd7d42b5ca9f20, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
