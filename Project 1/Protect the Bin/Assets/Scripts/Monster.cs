@@ -14,6 +14,8 @@ public class Monster : MonoBehaviour
 
     private Vector3 destination;
 
+    public bool IsActive { get; set; }
+
     private void Update () 
     {
         Move();
@@ -26,10 +28,13 @@ public class Monster : MonoBehaviour
 
         StartCoroutine( Scale( new Vector3( 0.1f, 0.1f ), new Vector3( -1, 1 )));
 
+        SetPath(LevelManager.Instance.Path);
     }
 
     public IEnumerator Scale ( Vector3 from, Vector3 to ) 
     {
+        IsActive = false;
+        
         float progress = 0;
 
         while ( progress <= 1 ) 
@@ -42,16 +47,31 @@ public class Monster : MonoBehaviour
         }
 
         transform.localScale = to;
+        IsActive = true;
     }
 
     private void Move()
     {
-        transform.position = Vector2.MoveTowards( transform.position, destination, speed * Time.deltaTime);
-    
-        if ( transform.position == destination ) 
+        if (IsActive)
         {
-            
+            transform.position = Vector2.MoveTowards(transform.position, destination, speed * Time.deltaTime);
+
+            if (path != null && path.Count > 0)
+            {
+                GridPosition = path.Peek().GridPosition;
+                destination = path.Pop().WorldPosition;
+            }
         }
-    
+    }
+
+    private void SetPath(Stack<Node> newPath)
+    {
+        if (newPath != null)
+        {
+            this.path = newPath;
+
+            GridPosition = path.Peek().GridPosition;
+            destination = path.Pop().WorldPosition;
+        }
     }
 }
