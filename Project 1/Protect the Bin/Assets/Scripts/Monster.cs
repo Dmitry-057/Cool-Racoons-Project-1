@@ -61,10 +61,13 @@ public class Monster : MonoBehaviour
         {
             transform.position = Vector2.MoveTowards(transform.position, destination, speed * Time.deltaTime);
 
-            if (path != null && path.Count > 0)
+            if (transform.position == destination)//bug found here transform.position was path
             {
-                GridPosition = path.Peek().GridPosition;
-                destination = path.Pop().WorldPosition;
+                if ( path != null && path.Count > 0) 
+                {
+                    GridPosition = path.Peek().GridPosition;
+                    destination = path.Pop().WorldPosition;
+                }
             }
         }
     }
@@ -81,26 +84,31 @@ public class Monster : MonoBehaviour
     }
 
 
-    private void Animate( Point currentPos, Point newPos ) //This is unused bc we do not have updownrightleft animations Video 7.4
+    // private void Animate( Point currentPos, Point newPos ) //This is unused bc we do not have updownrightleft animations Video 7.4
+    // {
+    //     if ( currentPos.Y > newPos.Y ) 
+    //     {
+    //         //We are moving down
+    //     } 
+    //     else if ( currentPos.Y < newPos.Y ) 
+    //     {
+    //         //Then we are moving up
+    //     }
+    //     if ( currentPos.Y == newPos.Y ) 
+    //     {
+    //         if ( currentPos.X > newPos.X) 
+    //         {
+    //             //Move ot left
+    //         }
+    //         else 
+    //         {
+    //             //Move to right
+    //         }
+    //     }
+    // }
+
+    private void OnTriggerEnter2D ( Collider2D other)
     {
-        if ( currentPos.Y > newPos.Y ) 
-        {
-            //We are moving down
-        } 
-        else if ( currentPos.Y < newPos.Y ) 
-        {
-            //Then we are moving up
-        }
-        if ( currentPos.Y == newPos.Y ) 
-        {
-            if ( currentPos.X > newPos.X) 
-            {
-                //Move ot left
-            }
-            else 
-            {
-                //Move to right
-            }
-        }
+
     }
 }

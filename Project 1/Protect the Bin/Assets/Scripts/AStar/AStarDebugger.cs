@@ -19,13 +19,15 @@ public class AStarDebugger : MonoBehaviour
         
     }
 
-    // Update is called once per frame
+    // // Update is called once per frame
     // void Update()
     // {
     //     ClickTile();
 
     //     if (Input.GetKeyDown(KeyCode.Space))
     //     {
+
+    //         Debug.Log("SpaceDOWN");
     //         AStar.GetPath(start.GridPosition, goal.GridPosition);
     //     }
     // }
