@@ -1417,6 +1417,8 @@ MonoBehaviour:
   map: {fileID: 648467976}
   bluePortalPrefab: {fileID: 8855340686017022109, guid: 79d92b2db25600049a2a37e60557ace9,
     type: 3}
+  redPortalPrefab: {fileID: 2287306664910758835, guid: 2ba301c63bb5cad45b76f22478e19680,
+    type: 3}
 --- !u!4 &955774832
 Transform:
   m_ObjectHideFlags: 0
