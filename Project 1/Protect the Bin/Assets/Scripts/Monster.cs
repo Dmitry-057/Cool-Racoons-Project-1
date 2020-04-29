@@ -31,14 +31,14 @@ public class Monster : MonoBehaviour
         //This is unused bc we do not have updownrightleft animations Video 7.4
         myAnimator = GetComponent<Animator>();
 
-        StartCoroutine( Scale( new Vector3( 0.1f, 0.1f ), new Vector3( -1, 1 )));
+        StartCoroutine( Scale( new Vector3( 0.1f, 0.1f ), new Vector3( -1, 1 ), false));
 
         SetPath(LevelManager.Instance.Path);
     }
 
-    public IEnumerator Scale ( Vector3 from, Vector3 to ) 
+    public IEnumerator Scale ( Vector3 from, Vector3 to, bool remove) 
     {
-        IsActive = false;
+        //IsActive = false;     not needed for despawning
         
         float progress = 0;
 
@@ -53,6 +53,11 @@ public class Monster : MonoBehaviour
 
         transform.localScale = to;
         IsActive = true;
+
+        if(remove)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Move()
@@ -109,6 +114,10 @@ public class Monster : MonoBehaviour
 
     private void OnTriggerEnter2D ( Collider2D other)
     {
-
+        if(other.tag == "RedPortal")
+        {
+            StartCoroutine(Scale(new Vector3(1, 1), new Vector3(0.1f, 0.1f), true));
+                   
+        }
     }
 }
