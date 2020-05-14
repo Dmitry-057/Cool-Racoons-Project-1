@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 50401431068884710}
   m_Layer: 0
   m_Name: 179-1797997_stick-figure-walking-silhouette-clip-art-silueta-de-una-persona-caminando
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
