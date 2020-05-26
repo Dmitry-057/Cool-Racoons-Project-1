@@ -111,6 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileType: SodaProjectile
   projectileSpeed: 3
+  damage: 0
   attackCooldown: 3
 --- !u!1 &3266172315582975030
 GameObject:
@@ -158,8 +159,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileType: SodaProjectile
-  projectileSpeed: 0
-  attackCooldown: 0
+  projectileSpeed: 3
+  damage: 5
+  attackCooldown: 2
 --- !u!212 &3266172315582975028
 SpriteRenderer:
   m_ObjectHideFlags: 0

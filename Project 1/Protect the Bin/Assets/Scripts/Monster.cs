@@ -12,11 +12,20 @@ public class Monster : MonoBehaviour
 
     private Animator myAnimator;
 
+    [SerializeField]
+    private Stat health;
+
     public Point GridPosition { get; set; }
 
     private Vector3 destination;
 
     public bool IsActive { get; set; }
+
+
+    public void Awake()
+    {
+        health.Initialize();
+    }
 
     private void Update () 
     {
@@ -24,9 +33,15 @@ public class Monster : MonoBehaviour
     }
 
     //spawns the monster in our world
-    public void Spawn()
+    public void Spawn ( int health )
     {
         transform.position = LevelManager.Instance.BluePortal.transform.position;
+
+        this.health.MaxVal = health;
+
+        Debug.Log("this.health.MaxVal " + this.health.MaxVal);
+        this.health.CurrentVal = this.health.MaxVal;
+        Debug.Log("this.health.CurrentVal " + this.health.CurrentVal);
 
         //This is unused bc we do not have updownrightleft animations Video 7.4
         myAnimator = GetComponent<Animator>();
@@ -88,30 +103,6 @@ public class Monster : MonoBehaviour
         }
     }
 
-
-    // private void Animate( Point currentPos, Point newPos ) //This is unused bc we do not have updownrightleft animations Video 7.4
-    // {
-    //     if ( currentPos.Y > newPos.Y ) 
-    //     {
-    //         //We are moving down
-    //     } 
-    //     else if ( currentPos.Y < newPos.Y ) 
-    //     {
-    //         //Then we are moving up
-    //     }
-    //     if ( currentPos.Y == newPos.Y ) 
-    //     {
-    //         if ( currentPos.X > newPos.X) 
-    //         {
-    //             //Move ot left
-    //         }
-    //         else 
-    //         {
-    //             //Move to right
-    //         }
-    //     }
-    // }
-
     private void OnTriggerEnter2D ( Collider2D other)
     {
         if(other.tag == "RedPortal")
@@ -128,5 +119,17 @@ public class Monster : MonoBehaviour
         GridPosition = LevelManager.Instance.BlueSpawn;
         GameManager.Instance.Pool.ReleaseObject(gameObject);
         GameManager.Instance.RemoveMonster(this);
+    }
+
+    public void TakeDamage( int damage )
+    {
+        Debug.Log( "ISACTIVE");
+        if ( IsActive )
+        {
+            Debug.Log( "health.CurrentValbefore " + health.CurrentVal);
+            health.CurrentVal -= damage;
+            Debug.Log( "health.CurrentValafter " + health.CurrentVal);
+        }
+        
     }
 }

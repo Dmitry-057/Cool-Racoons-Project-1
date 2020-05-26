@@ -38,4 +38,22 @@ public class Projectile : MonoBehaviour
             GameManager.Instance.Pool.ReleaseObject( gameObject );
         }
     }
+
+    private void OnTriggerEnter2D( Collider2D other )
+    {
+        if ( other.tag == "Monster") 
+        {
+
+            if ( target.gameObject == other.gameObject )
+            {
+
+                //TODO: Fix this bug figure out why it is not taking the Damage
+                //parameter from the serialized field.
+                Debug.Log("parent.Damage " + parent.Damage);
+                target.TakeDamage( 5 );
+                GameManager.Instance.Pool.ReleaseObject( gameObject );
+            }
+            
+        }
+    }
 }

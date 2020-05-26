@@ -11,6 +11,9 @@ public class Tower : MonoBehaviour
     [SerializeField]
     private float projectileSpeed;
 
+    [SerializeField]
+    private int damage;
+
     public float ProjectileSpeed
     {
         get { return projectileSpeed; }
@@ -23,6 +26,16 @@ public class Tower : MonoBehaviour
     public Monster Target
     {
         get { return target; }
+    }
+
+    public int Damage
+    {
+        get 
+        { 
+            Debug.Log("DAMAGE HERE " + damage);
+            return damage; 
+        }
+
     }
 
     private Queue<Monster> monsters = new Queue<Monster>();
