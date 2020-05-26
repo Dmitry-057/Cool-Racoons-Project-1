@@ -41,6 +41,15 @@ public class Stat
         }
     }
 
+    public BarScript Bar
+    {
+        get
+        {
+            return bar;
+        }
+
+    }
+
     public void Initialize ()
     {
         this.MaxVal = maxVal;

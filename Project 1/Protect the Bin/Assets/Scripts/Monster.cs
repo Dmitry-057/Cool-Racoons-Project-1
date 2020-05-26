@@ -12,10 +12,17 @@ public class Monster : MonoBehaviour
 
     private Stack<Node> path;
 
+    private SpriteRenderer spriteRenderer;
+
     private Animator myAnimator;
 
     [SerializeField]
     private Stat health;
+
+    public bool Alive
+    {
+        get { return health.CurrentVal > 0; }
+    }
 
     public Point GridPosition { get; set; }
 
@@ -26,7 +33,9 @@ public class Monster : MonoBehaviour
 
     public void Awake()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         health.Initialize();
+
     }
 
     private void Update () 
@@ -39,11 +48,10 @@ public class Monster : MonoBehaviour
     {
         transform.position = LevelManager.Instance.BluePortal.transform.position;
 
+        this.health.Bar.Reset();
         this.health.MaxVal = health;
 
-        Debug.Log("this.health.MaxVal " + this.health.MaxVal);
         this.health.CurrentVal = this.health.MaxVal;
-        Debug.Log("this.health.CurrentVal " + this.health.CurrentVal);
 
         //This is unused bc we do not have updownrightleft animations Video 7.4
         myAnimator = GetComponent<Animator>();
@@ -113,9 +121,13 @@ public class Monster : MonoBehaviour
                    
             GameManager.Instance.Lives--;
         }
+        if ( other.tag == "Tile" )
+        {
+            spriteRenderer.sortingOrder = other.GetComponent<TileScript>().GridPosition.Y;
+        }
     }
 
-    private void Release()
+    public void Release()
     {
         IsActive = false;
         GridPosition = LevelManager.Instance.BlueSpawn;
@@ -130,6 +142,11 @@ public class Monster : MonoBehaviour
         {
             Debug.Log( "health.CurrentValbefore " + health.CurrentVal);
             health.CurrentVal = health.CurrentVal - damage;
+            if ( health.CurrentVal <= 0)
+            {
+                GameManager.Instance.Currency += 2;
+                Release();
+            }
             Debug.Log( "health.CurrentValafter " + health.CurrentVal);
         }
         

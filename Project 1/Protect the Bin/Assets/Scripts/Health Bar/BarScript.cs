@@ -55,4 +55,10 @@ public class BarScript : MonoBehaviour
         return ( value - inMin ) * ( outMax - outMin ) / ( inMax - inMin ) + outMin;
     }
 
+    public void Reset()
+    {
+        content.fillAmount = 1;
+        Value = MaxValue;
+    }
+
 }
