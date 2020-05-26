@@ -18,13 +18,19 @@ public class Projectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("Damage is projectile " + parent.Damage);
         MoveToTarget();
     }
 
     public void Initialize ( Tower parent)
     {
+        Debug.Log( "This is the damage from tower 4 " + parent.Damage );
         this.target = parent.Target;
         this.parent = parent;
+
+        Debug.Log("THEPARENTIS " + parent);
+        Debug.Log( "This is the damage from tower 5 " + parent.Damage );
+
     }
 
     private void MoveToTarget()
@@ -50,7 +56,7 @@ public class Projectile : MonoBehaviour
                 //TODO: Fix this bug figure out why it is not taking the Damage
                 //parameter from the serialized field.
                 Debug.Log("parent.Damage " + parent.Damage);
-                target.TakeDamage( 5 );
+                target.TakeDamage( parent.Damage );
                 GameManager.Instance.Pool.ReleaseObject( gameObject );
             }
             

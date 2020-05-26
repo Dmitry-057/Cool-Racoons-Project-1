@@ -101,6 +101,7 @@ public class GameManager : Singleton<GameManager>
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("Damage is gamemanger " + selectedTower.Damage);
         HandleEscape();
     }
 

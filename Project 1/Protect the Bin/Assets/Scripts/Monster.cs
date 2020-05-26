@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -127,7 +129,7 @@ public class Monster : MonoBehaviour
         if ( IsActive )
         {
             Debug.Log( "health.CurrentValbefore " + health.CurrentVal);
-            health.CurrentVal -= damage;
+            health.CurrentVal = health.CurrentVal - damage;
             Debug.Log( "health.CurrentValafter " + health.CurrentVal);
         }
         
