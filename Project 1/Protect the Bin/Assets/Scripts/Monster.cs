@@ -12,7 +12,18 @@ public class Monster : MonoBehaviour
 
     private Stack<Node> path;
 
+    private List<Debuff> debuffs = new List<Debuff>();
+
+    private List<Debuff> debuffsToRemove = new List<Debuff>();
+
+    private List<Debuff> newDebuffs = new List<Debuff>();
+
+    [SerializeField]
+    private Element elementType;
+
     private SpriteRenderer spriteRenderer;
+
+    private int invulnerability = 2;
 
     private Animator myAnimator;
 
@@ -30,6 +41,15 @@ public class Monster : MonoBehaviour
 
     public bool IsActive { get; set; }
 
+    public Element ElementType
+    {
+        get 
+        { 
+            return elementType; 
+            
+        }
+    }
+
 
     public void Awake()
     {
@@ -40,12 +60,14 @@ public class Monster : MonoBehaviour
 
     private void Update () 
     {
+        HandleDebuffs();
         Move();
     }
 
     //spawns the monster in our world
     public void Spawn ( int health )
     {
+
         transform.position = LevelManager.Instance.BluePortal.transform.position;
 
         this.health.Bar.Reset();
@@ -129,26 +151,75 @@ public class Monster : MonoBehaviour
 
     public void Release()
     {
+
+        debuffs.Clear();
+
         IsActive = false;
         GridPosition = LevelManager.Instance.BlueSpawn;
         GameManager.Instance.Pool.ReleaseObject(gameObject);
         GameManager.Instance.RemoveMonster(this);
     }
 
-    public void TakeDamage( int damage )
+    public void TakeDamage( float damage, Element dmgSource )
     {
-        Debug.Log( "ISACTIVE");
         if ( IsActive )
         {
-            Debug.Log( "health.CurrentValbefore " + health.CurrentVal);
+            if ( dmgSource == elementType )
+            {
+                damage = damage / invulnerability;
+
+                invulnerability++;
+            }
+
+
             health.CurrentVal = health.CurrentVal - damage;
             if ( health.CurrentVal <= 0)
             {
                 GameManager.Instance.Currency += 2;
                 Release();
             }
-            Debug.Log( "health.CurrentValafter " + health.CurrentVal);
         }
         
+    }
+
+
+    public void AddDebuff( Debuff debuff )
+    {
+        if ( !debuffs.Exists( x => x.GetType() == debuff.GetType() ))
+        {
+            newDebuffs.Add( debuff );
+        }
+        
+    }
+
+    public void RemoveDebuff( Debuff debuff )
+    {
+
+        debuffsToRemove.Add( debuff );
+        
+    }
+
+
+    private void HandleDebuffs()
+    {
+
+        if ( newDebuffs.Count > 0)
+        {
+            debuffs.AddRange( newDebuffs );
+
+            newDebuffs.Clear();
+        }
+
+        foreach ( Debuff debuff in debuffsToRemove )
+        {
+            debuffs.Remove( debuff );
+        }
+
+        debuffsToRemove.Clear();
+
+        foreach ( Debuff debuff in debuffs )
+        {
+            debuff.Update();
+        }
     }
 }

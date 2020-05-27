@@ -9,6 +9,8 @@ public class Projectile : MonoBehaviour
 
     private Tower parent;
 
+    private Element elementType;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,18 +20,16 @@ public class Projectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Damage is projectile " + parent.Damage);
         MoveToTarget();
     }
 
     public void Initialize ( Tower parent)
     {
-        Debug.Log( "This is the damage from tower 4 " + parent.Damage );
         this.target = parent.Target;
         this.parent = parent;
+        this.elementType = parent.ElementType;
 
-        Debug.Log("THEPARENTIS " + parent);
-        Debug.Log( "This is the damage from tower 5 " + parent.Damage );
+
 
     }
 
@@ -45,21 +45,36 @@ public class Projectile : MonoBehaviour
         }
     }
 
+    
+    private void ApplyDebuff()
+    {
+        if ( target.ElementType != elementType)
+        {
+            float roll = Random.Range( 0, 100 );
+
+            if ( roll <= parent.Proc)
+            {
+                target.AddDebuff( parent.GetDebuff());
+            }
+        }
+
+        target.AddDebuff( parent.GetDebuff() );
+    }
+
     private void OnTriggerEnter2D( Collider2D other )
     {
-        if ( other.tag == "Monster") 
+        if ( other.tag == "Monster" ) 
         {
 
             if ( target.gameObject == other.gameObject )
             {
-
-                //TODO: Fix this bug figure out why it is not taking the Damage
-                //parameter from the serialized field.
-                Debug.Log("parent.Damage " + parent.Damage);
-                target.TakeDamage( parent.Damage );
+                target.TakeDamage( parent.Damage, elementType );
                 GameManager.Instance.Pool.ReleaseObject( gameObject );
+
+                ApplyDebuff();
             }
             
         }
     }
+
 }

@@ -28,7 +28,7 @@ public class Hover : Singleton<Hover>
         if (spriteRenderer.enabled)
         {
             transform.position = Camera.main.ScreenToWorldPoint( Input.mousePosition);
-            transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+            transform.position = new Vector3(transform.position.x - 1, transform.position.y + 1, 0);
         }
 
     }

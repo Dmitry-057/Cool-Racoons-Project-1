@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tower : MonoBehaviour
+public enum Element { SODA, NONE }
+
+public abstract class Tower : MonoBehaviour
 {
 
     [SerializeField]
@@ -13,6 +15,17 @@ public class Tower : MonoBehaviour
 
     [SerializeField]
     private int damage;
+
+    [SerializeField]
+    private float debuffDuration;
+
+
+    [SerializeField]
+    private float proc;
+
+    public Element ElementType { get; protected set; }
+
+    public int Price { get; set; }
 
     public float ProjectileSpeed
     {
@@ -32,8 +45,33 @@ public class Tower : MonoBehaviour
     {
         get 
         { 
-            Debug.Log("DAMAGE HERE " + damage);
             return damage; 
+        }
+
+    }
+
+    public float DebuffDuration
+    {
+        get 
+        { 
+            return debuffDuration; 
+        }
+        set
+        {
+            this.debuffDuration = value;
+        }
+
+    }
+
+    public float Proc
+    {
+        get 
+        { 
+            return proc; 
+        }
+        set
+        {
+            this.proc = value;
         }
 
     }
@@ -98,7 +136,7 @@ public class Tower : MonoBehaviour
             target = monsters.Dequeue();
         }
 
-        if ( target != null && !target.Alive )
+        if ( target != null && !target.Alive || target != null && !target.IsActive )
         {
             target = null;
         }
@@ -122,12 +160,9 @@ public class Tower : MonoBehaviour
             monsters.Enqueue( other.GetComponent<Monster>());
         } 
 
-        // if ( other.tag )
-        // {
-
-        // }
-
     }
+
+    public abstract Debuff GetDebuff();
 
     public void OnTriggerExit2D( Collider2D other )
     {

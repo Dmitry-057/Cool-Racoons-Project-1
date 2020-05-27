@@ -4,12 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+//delegate for the currency changed event
+public delegate void CurrencyChanged();
+
 public class GameManager : Singleton<GameManager>
 {
 
+    //event that is triggered when the currency changes 
+    public event CurrencyChanged Changed;
+
     public TowerButton ClickedBtn { get; set; }
-
-
 
     private int currency;
 
@@ -36,6 +40,12 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     private GameObject gameOverMenu;
 
+    [SerializeField]
+    private GameObject upgradePannel;
+
+    [SerializeField]
+    private Text sellText;
+
     private Tower selectedTower;
 
     private List<Monster> activeMonsters = new List<Monster>();
@@ -58,7 +68,9 @@ public class GameManager : Singleton<GameManager>
         set
         {
             this.currency = value;
-            this.currencyTxt.text = "<color=lime>$</color>" + value.ToString() ;
+            this.currencyTxt.text = "<color=lime>$</color>" + value.ToString();
+
+            OnCurrencyChanged();
         }
     }
 
@@ -78,11 +90,7 @@ public class GameManager : Singleton<GameManager>
                 this.lives = 0;
                 GameOver();
             }
-
-            
             livesTxt.text = lives.ToString();
-
-
         }
     }
 
@@ -95,13 +103,12 @@ public class GameManager : Singleton<GameManager>
     void Start()
     {
         Lives = 10;
-        Currency = 100;
+        Currency = 5;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Damage is gamemanger " + selectedTower.Damage);
         HandleEscape();
     }
 
@@ -129,6 +136,14 @@ public class GameManager : Singleton<GameManager>
         Hover.Instance.Deactivate();
     }
 
+    public void OnCurrencyChanged ()
+    {
+        if ( Changed != null )
+        {
+            Changed();
+        }
+    }
+
     public void SelectTower( Tower tower ) 
     {
 
@@ -139,6 +154,10 @@ public class GameManager : Singleton<GameManager>
 
         selectedTower = tower;
         selectedTower.Select();
+
+        upgradePannel.SetActive( true );
+
+        sellText.text = "+ " + ( selectedTower.Price / 2 ).ToString();
     }
 
     public void DeselectTower()
@@ -148,7 +167,11 @@ public class GameManager : Singleton<GameManager>
             selectedTower.Select();
         }
 
+        upgradePannel.SetActive( false );
+
         selectedTower = null;
+
+        
     }
 
     private void HandleEscape()
@@ -198,7 +221,6 @@ public class GameManager : Singleton<GameManager>
             Monster monster = Pool.GetObject(type).GetComponent<Monster>();
 
             monster.Spawn( health );
-            Debug.Log("Health is " + health);
 
             if ( wave % 3 == 0 )
             {
@@ -242,6 +264,20 @@ public class GameManager : Singleton<GameManager>
     public void QuitGame () 
     {
         Application.Quit();
+    }
+
+    public void SellTower()
+    {
+        if ( selectedTower != null )
+        {
+            Currency += selectedTower.Price / 2;
+
+            selectedTower.GetComponentInParent<TileScript>().IsEmpty = true;
+
+            Destroy( selectedTower.transform.parent.gameObject );
+
+            DeselectTower();
+        }
     }
 
 }

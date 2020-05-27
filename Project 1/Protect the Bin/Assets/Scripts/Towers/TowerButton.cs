@@ -45,5 +45,21 @@ public class TowerButton : MonoBehaviour
     private void Start()
     {
         priceTxt.text = "$" + price;
+
+        GameManager.Instance.Changed += new CurrencyChanged( PriceCheck );
+    }
+
+    private void PriceCheck()
+    {
+        if ( price <= GameManager.Instance.Currency )
+        {
+            GetComponent<Image>().color = Color.white;
+            priceTxt.color = Color.white;
+        }
+        else 
+        {
+            GetComponent<Image>().color = Color.grey;
+            priceTxt.color = Color.grey;
+        }
     }
 }
