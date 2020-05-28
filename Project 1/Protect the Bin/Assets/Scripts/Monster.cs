@@ -12,11 +12,6 @@ public class Monster : MonoBehaviour
 
     private Stack<Node> path;
 
-    private List<Debuff> debuffs = new List<Debuff>();
-
-    private List<Debuff> debuffsToRemove = new List<Debuff>();
-
-    private List<Debuff> newDebuffs = new List<Debuff>();
 
     [SerializeField]
     private Element elementType;
@@ -29,6 +24,19 @@ public class Monster : MonoBehaviour
 
     [SerializeField]
     private Stat health;
+
+    public Stat Health
+    {
+        get 
+        { 
+            return health; 
+            
+        }
+        set
+        {
+            this.health = value;
+        }
+    }
 
     public bool Alive
     {
@@ -60,7 +68,6 @@ public class Monster : MonoBehaviour
 
     private void Update () 
     {
-        HandleDebuffs();
         Move();
     }
 
@@ -152,8 +159,6 @@ public class Monster : MonoBehaviour
     public void Release()
     {
 
-        debuffs.Clear();
-
         IsActive = false;
         GridPosition = LevelManager.Instance.BlueSpawn;
         GameManager.Instance.Pool.ReleaseObject(gameObject);
@@ -164,11 +169,13 @@ public class Monster : MonoBehaviour
     {
         if ( IsActive )
         {
+            Debug.Log( "dmgSource " + dmgSource + " elementType " + elementType);
             if ( dmgSource == elementType )
             {
                 damage = damage / invulnerability;
 
                 invulnerability++;
+                Debug.Log("Should not be in here");
             }
 
 
@@ -183,43 +190,5 @@ public class Monster : MonoBehaviour
     }
 
 
-    public void AddDebuff( Debuff debuff )
-    {
-        if ( !debuffs.Exists( x => x.GetType() == debuff.GetType() ))
-        {
-            newDebuffs.Add( debuff );
-        }
-        
-    }
 
-    public void RemoveDebuff( Debuff debuff )
-    {
-
-        debuffsToRemove.Add( debuff );
-        
-    }
-
-
-    private void HandleDebuffs()
-    {
-
-        if ( newDebuffs.Count > 0)
-        {
-            debuffs.AddRange( newDebuffs );
-
-            newDebuffs.Clear();
-        }
-
-        foreach ( Debuff debuff in debuffsToRemove )
-        {
-            debuffs.Remove( debuff );
-        }
-
-        debuffsToRemove.Clear();
-
-        foreach ( Debuff debuff in debuffs )
-        {
-            debuff.Update();
-        }
-    }
 }

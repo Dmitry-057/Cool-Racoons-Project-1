@@ -444,11 +444,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  elementType: 1
+  elementType: 2
   health:
     bar: {fileID: 1128295795}
     maxVal: 15
-    currentVal: 10
+    currentVal: 5
 --- !u!95 &95574390739546396
 Animator:
   serializedVersion: 3

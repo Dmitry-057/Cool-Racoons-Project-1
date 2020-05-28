@@ -23,7 +23,7 @@ public class GameManager : Singleton<GameManager>
 
     private bool gameOver = false;
 
-    private int health = 20;
+    private int health = 5;
 
     [SerializeField]
     private Text livesTxt;
@@ -111,8 +111,8 @@ public class GameManager : Singleton<GameManager>
     // Start is called before the first frame update
     void Start()
     {
-        Lives = 10;
-        Currency = 20;
+        Lives = 3;
+        Currency = 5;
     }
 
     // Update is called once per frame
@@ -205,6 +205,7 @@ public class GameManager : Singleton<GameManager>
 
     public void StartWave()
     {
+        
         wave++;
 
         waveTxt.text = string.Format("Wave: <color=yellow>{0}</color>", wave);
@@ -212,6 +213,20 @@ public class GameManager : Singleton<GameManager>
         StartCoroutine( SpawnWave());
 
         waveBtn.SetActive(false);
+
+        // if ( wave > 1)
+        // {
+        //     int i = 0; 
+        //     while ( activeMonsters[i] != null )
+        //     {
+        //         if ( activeMonsters[i].GetComponent<SpriteRenderer>().Equals("orangecrab") )
+        //         {
+        //             activeMonsters[i].Health.CurrentVal += 5;
+        //         }
+        //     }
+            
+        // }
+        Debug.Log("Health " + activeMonsters[0].Health.CurrentVal);
     }
 
     private IEnumerator SpawnWave ()

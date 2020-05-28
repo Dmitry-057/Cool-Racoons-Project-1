@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Element { SODA, NONE }
+public enum Element { SODA, TINBALL, NONE }
 
 public abstract class Tower : MonoBehaviour
 {
@@ -50,18 +50,6 @@ public abstract class Tower : MonoBehaviour
 
     }
 
-    public float DebuffDuration
-    {
-        get 
-        { 
-            return debuffDuration; 
-        }
-        set
-        {
-            this.debuffDuration = value;
-        }
-
-    }
 
     public float Proc
     {
@@ -157,8 +145,6 @@ public abstract class Tower : MonoBehaviour
         } 
 
     }
-
-    public abstract Debuff GetDebuff();
 
     public void OnTriggerExit2D( Collider2D other )
     {

@@ -36,10 +36,6 @@ public class DumpsterTower : Tower
         ElementType = Element.SODA;
     }
 
-    public override Debuff GetDebuff() 
-   {
-       return new SodaDebuff( tickDamage, tickTime, DebuffDuration, Target );
-   }
 
 
 }

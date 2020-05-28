@@ -107,7 +107,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3743205402508843997}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.16, y: 0.05, z: 0}
+  m_LocalPosition: {x: 1.01, y: -0.91, z: 0}
   m_LocalScale: {x: 5.6, y: 5.6, z: 1}
   m_Children: []
   m_Father: {fileID: 5852757082076184503}
@@ -191,7 +191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileType: SodaProjectile
   projectileSpeed: 3
-  damage: 1
+  damage: 5
   debuffDuration: 10
   proc: 100
   attackCooldown: 1

@@ -9,6 +9,7 @@ public class Projectile : MonoBehaviour
 
     private Tower parent;
 
+    [SerializeField]
     private Element elementType;
 
     // Start is called before the first frame update
@@ -52,13 +53,9 @@ public class Projectile : MonoBehaviour
         {
             float roll = Random.Range( 0, 100 );
 
-            if ( roll <= parent.Proc)
-            {
-                target.AddDebuff( parent.GetDebuff());
-            }
+
         }
 
-        target.AddDebuff( parent.GetDebuff() );
     }
 
     private void OnTriggerEnter2D( Collider2D other )
