@@ -38,6 +38,8 @@ public class Hover : Singleton<Hover>
 
     public void Activate(Sprite sprite)
     {
+
+        Debug.Log("THESPRITE " + sprite + " " );
         this.spriteRenderer.sprite = sprite;
         spriteRenderer.enabled = true;
 

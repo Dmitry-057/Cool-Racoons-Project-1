@@ -169,8 +169,10 @@ public class Monster : MonoBehaviour
     {
         if ( IsActive )
         {
+
+            string type = string.Empty;
             Debug.Log( "dmgSource " + dmgSource + " elementType " + elementType);
-            if ( dmgSource == elementType )
+            if ( dmgSource == elementType && type == "OrangeCrabMonster")
             {
                 damage = damage / invulnerability;
 
@@ -180,9 +182,12 @@ public class Monster : MonoBehaviour
 
 
             health.CurrentVal = health.CurrentVal - damage;
-            if ( health.CurrentVal <= 0)
+
+            //Add different currency for different crabs killed
+            if ( health.CurrentVal <= 0 )
             {
                 GameManager.Instance.Currency += 2;
+                
                 Release();
             }
         }

@@ -89,6 +89,8 @@ public abstract class Tower : MonoBehaviour
 
     public void Select() 
     {
+        Debug.Log("ISHERE?" + mySpriteRenderer);
+        mySpriteRenderer = GetComponent<SpriteRenderer>();
         mySpriteRenderer.enabled = !mySpriteRenderer.enabled;
     }
 
