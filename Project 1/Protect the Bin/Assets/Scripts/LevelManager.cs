@@ -56,6 +56,8 @@ public class LevelManager : Singleton<LevelManager>
 
     public Point BlueSpawn { get => blueSpawn; /*set => blueSpawn = value; */ }
 
+    public Point RedSpawn { get => redSpawn; /*set => blueSpawn = value; */ }
+
     // Start is called before the first frame update
     void Start()
     {

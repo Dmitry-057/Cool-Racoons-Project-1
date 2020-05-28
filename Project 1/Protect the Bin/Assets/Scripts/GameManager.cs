@@ -44,7 +44,16 @@ public class GameManager : Singleton<GameManager>
     private GameObject upgradePannel;
 
     [SerializeField]
+    private GameObject inGameMenu;
+
+    [SerializeField]
+    private GameObject statsPanel;
+
+    [SerializeField]
     private Text sellText;
+
+    [SerializeField]
+    private Text statTxt;
 
     private Tower selectedTower;
 
@@ -103,7 +112,7 @@ public class GameManager : Singleton<GameManager>
     void Start()
     {
         Lives = 10;
-        Currency = 5;
+        Currency = 20;
     }
 
     // Update is called once per frame
@@ -178,7 +187,19 @@ public class GameManager : Singleton<GameManager>
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Hover.Instance.Deactivate();
+
+            if ( selectedTower == null && !Hover.Instance.IsVisible)
+            {
+                ShowInGameMenu();
+            }
+            else if ( Hover.Instance.IsVisible )
+            {
+                DropTower();
+            }
+            else if ( selectedTower != null )
+            {
+                DeselectTower();
+            }
         }
     }
 
@@ -278,6 +299,37 @@ public class GameManager : Singleton<GameManager>
 
             DeselectTower();
         }
+    }
+
+    // public void ShowStats()
+    // {
+    //     statsPanel.SetActive( !statsPanel.activeSelf );
+    // }
+
+    // public void SetTooltipText( string txt)
+    // {
+    //     statTxt.text = txt;
+    // }
+
+
+    public void ShowInGameMenu()
+    {
+        inGameMenu.SetActive( !inGameMenu.activeSelf );
+
+        if ( !inGameMenu.activeSelf )
+        {
+            Time.timeScale = 1;
+        }
+        else 
+        {
+            Time.timeScale = 0;
+        }
+    }
+
+    private void DropTower()
+    {
+        ClickedBtn = null;
+        Hover.Instance.Deactivate();
     }
 
 }

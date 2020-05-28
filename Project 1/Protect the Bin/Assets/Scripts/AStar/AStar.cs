@@ -107,13 +107,13 @@ public static class AStar
                     currentNode = currentNode.Parent;
                 }
 
-                break;
+                return finalPath;
             }
 
         }
 
-        return finalPath;
         
+        return null;
         //This is only for debugging needs to be removed later
         //GameObject.Find("AStarDebugger").GetComponent<AStarDebugger>().DebugPath(openList, closedList, finalPath);
     }

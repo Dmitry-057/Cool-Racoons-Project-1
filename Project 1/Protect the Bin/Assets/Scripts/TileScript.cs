@@ -105,6 +105,13 @@ public class TileScript : MonoBehaviour
     private void PlaceTower()
     {
 
+        WalkAble = false;
+        if ( AStar.GetPath( LevelManager.Instance.BlueSpawn, LevelManager.Instance.RedSpawn ) == null )
+        {
+            WalkAble = true;
+            return;
+        }
+
             GameObject tower = (GameObject) Instantiate(GameManager.Instance.ClickedBtn.TowerPrefab,transform.position, Quaternion.identity);
             tower.GetComponent<SpriteRenderer>().sortingOrder = GridPosition.Y;
 

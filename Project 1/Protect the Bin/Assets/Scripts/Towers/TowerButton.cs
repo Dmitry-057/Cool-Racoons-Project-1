@@ -62,4 +62,31 @@ public class TowerButton : MonoBehaviour
             priceTxt.color = Color.grey;
         }
     }
+
+    // public void ShowInfo ( string type )
+    // {
+
+    //     string tooltip = string.Empty;
+
+    //     switch ( type )
+    //     {
+    //         case "Dust Bin":
+    //             OfficeBinTower bin = towerPrefab.GetComponentInChildren<OfficeBinTower>();
+    //             tooltip = string.Format("<size=20><b>Dust Bin</b></size>\nDamage:{0 \nProc: {1}% \nDebuff duration: {2}sec", bin.Damage, bin.Proc, bin.DebuffDuration);
+    //             break;
+
+    //         case "Trash Can":
+    //             Tower can = towerPrefab.GetComponentInChildren<Tower>();
+    //             tooltip = string.Format("<size=20><b>Trash Can</b></size>\nDamage:{0 \nProc: {1}% \nDebuff duration: {2}sec");
+    //             break;
+
+    //         case "Dumpster":
+    //             DumpsterTower dumpster = towerPrefab.GetComponentInChildren<DumpsterTower>();
+    //             tooltip = string.Format("<size=20><b>Dumpster</b></size>\nDamage:{0 \nProc: {1}% \nDebuff duration: {2}sec");
+    //             break;
+    //     }
+
+    //     GameManager.Instance.SetTooltipText( tooltip );
+    //     GameManager.Instance.ShowStats();
+    // }
 }
